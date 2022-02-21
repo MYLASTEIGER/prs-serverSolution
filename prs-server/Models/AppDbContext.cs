@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using prs_server.Models;
 
 namespace prs_server.Models {
     public class AppDbContext : DbContext {
@@ -6,6 +7,7 @@ namespace prs_server.Models {
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Vendor> Vendors { get; set; }
         public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<Request> Requests { get; set; }
 
         public AppDbContext() { }
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) {}
@@ -23,5 +25,7 @@ namespace prs_server.Models {
             });
 
         }
+
+        public DbSet<prs_server.Models.Request> Request { get; set; }
     }
 }

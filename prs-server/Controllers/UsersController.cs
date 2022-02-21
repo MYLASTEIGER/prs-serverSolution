@@ -19,10 +19,17 @@ namespace prs_server.Controllers
         {
             _context = context;
         }
-        public User Login(string username, string password) {
-            return  _context.Users
-                .SingleOrDefault(x => x.Username == username && x.Password == password);
+        [HttpGet("{username}/{password}")]
+        public async Task<ActionResult<User>> Login(string username, string password) {
+           
+            var user = await  _context.Users
+                .SingleOrDefaultAsync(x => x.Username == username && x.Password == password);
+            if(user is null) {
+                return NotFound();
+            }
+            return user;
         }
+
 
         // GET: api/Users
         [HttpGet]
