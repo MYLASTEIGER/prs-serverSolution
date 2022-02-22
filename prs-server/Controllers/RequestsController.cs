@@ -108,8 +108,8 @@ namespace prs_server.Controllers
         [HttpPost]
         public async Task<ActionResult<Request>> PostRequest(Request request)
         {
-            _context.Requests.Add(request);
             await _context.SaveChangesAsync();
+            _context.Requests.Add(request);
 
             return CreatedAtAction("GetRequest", new { id = request.Id }, request);
         }
@@ -124,8 +124,8 @@ namespace prs_server.Controllers
                 return NotFound();
             }
 
-            _context.Requests.Remove(request);
             await _context.SaveChangesAsync();
+            _context.Requests.Remove(request);
 
             return NoContent();
         }
