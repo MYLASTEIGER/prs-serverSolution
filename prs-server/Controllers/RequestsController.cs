@@ -19,13 +19,13 @@ namespace prs_server.Controllers
         {
             _context = context;
         }
-        [HttpGet("Reviews/{userId}")]
+        [HttpGet("Review/{userId}")]
         public async Task<ActionResult<IEnumerable<Request>>> GetRequestsInReview(int userId) {
             var requests = await _context.Requests
                 .Where(x => x.Status == "Review"
                 && x.UserId != userId)
                 .ToListAsync();
-            return await GetRequestsInReview(userId);
+            return requests;
         }
                 
         [HttpPut("Approve/{id}")]
@@ -55,14 +55,14 @@ namespace prs_server.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Request>>> GetRequest()
         {
-            return await _context.Request.ToListAsync();
+            return await _context.Requests.ToListAsync();
         }
 
         // GET: api/Requests/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Request>> GetRequest(int id)
         {
-            var request = await _context.Request.FindAsync(id);
+            var request = await _context.Requests.FindAsync(id);
 
             if (request == null)
             {
@@ -108,7 +108,7 @@ namespace prs_server.Controllers
         [HttpPost]
         public async Task<ActionResult<Request>> PostRequest(Request request)
         {
-            _context.Request.Add(request);
+            _context.Requests.Add(request);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetRequest", new { id = request.Id }, request);
@@ -118,13 +118,13 @@ namespace prs_server.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRequest(int id)
         {
-            var request = await _context.Request.FindAsync(id);
+            var request = await _context.Requests.FindAsync(id);
             if (request == null)
             {
                 return NotFound();
             }
 
-            _context.Request.Remove(request);
+            _context.Requests.Remove(request);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -132,7 +132,7 @@ namespace prs_server.Controllers
 
         private bool RequestExists(int id)
         {
-            return _context.Request.Any(e => e.Id == id);
+            return _context.Requests.Any(e => e.Id == id);
         }
     }
 }

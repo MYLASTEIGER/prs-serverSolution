@@ -27,6 +27,6 @@ namespace prs_server.Models {
 
         }
 
-        public DbSet<prs_server.Models.Request> Request { get; set; }
+       
     }
 }
